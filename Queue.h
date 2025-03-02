@@ -1,17 +1,21 @@
 // Queue.h
+//-----------------------------------------
+// CLASS: Queue
+//
+// AUTHOR: Felix Vo, 7924848
+//
+// REMARKS: Abstract base class for a queue structure.
+//          Provides a common interface for enqueueing and dequeueing events.
+//-----------------------------------------
 #pragma once
-#include "Event.h"
+#include "Node.h"
 #include <iostream>
 class Queue {
 protected:
-    struct Node {
-        Event* event;
-        Node* next;
-        Node(Event* e) : event(e), next(nullptr) {}
-    };
     Node* head;
 
 public:
+    // Constructor to initialize the queue
     Queue() : head(nullptr) {}
     virtual ~Queue();
 

@@ -1,8 +1,26 @@
+
+//-----------------------------------------
+// CLASS: Simulation
+//
+// AUTHOR: Felix Vo, 7924848
+//
+// REMARKS: Core class for managing airport runway simulations.
+//          Coordinates event processing, runway allocation, and statistics tracking.
+//-----------------------------------------
 #pragma once
 #include <iostream>
-#include "Runway.h"
-#include "PriorityQueue.h"
 #include <fstream>
+#include <sstream>
+#include "Runway.h"
+#include "Plane.h"
+#include "Event.h"
+#include "TakeoffEvent.h"
+#include "LandingEvent.h"
+#include "RequestLandingEvent.h"
+#include "RequestTakeoffEvent.h"
+#include "CompleteEvent.h"
+#include "PriorityQueue.h"
+#include "WaitingQueue.h"
 
 using namespace std;
 
@@ -10,19 +28,26 @@ class Simulation
 {
     private:
         PriorityQueue eventQueue; 
+        WaitingQueue waitingLine;
         Runway* runways; 
         int numRunways;
-        int currentTime;
+        
         int nextAtcId;
         int totalWastedTime;
-        std::ifstream inputFile;
+        int currentTime;
+        ifstream inputFile;
+
+        void processRequestEvent(Event* event);
+        void processStartEvent(Event* event);
+        void processCompleteEvent(Event* event);
+
     public:
-    Simulation(const std::string& filename, int numRunways);
+    Simulation();
+    Simulation(string& filename, int numRunways);
+
     ~Simulation();
 
+    bool readLine();
     void run();
-    void processEvent(Event* event);
-    void scheduleNextRequest();
-    void assignRunway(Plane* plane, bool isLanding);
-    void calculateWastedTime(Plane* plane, int clearanceTime);
+
 };

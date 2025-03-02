@@ -1,14 +1,12 @@
 #include "Plane.h"
-#include <iostream>
-#include <string>
 
 // Initialize static ATC ID
 int Plane::nextAtcID = 1;
 
 // Constructor definition
-Plane::Plane( string callSign, int flightNumber, string size)
-: callSign(callSign), flightNumber(flightNumber), size(size) {
-    atcID = nextAtcID++;
+Plane::Plane(std::string callSign, int flightNumber, std::string size)
+    : callSign(callSign), flightNumber(flightNumber), size(size) {
+    atcID = nextAtcID++; // Assign the next ATC ID
 }
 
 // Calculate time required based on size (for landing or takeoff)
@@ -20,12 +18,12 @@ int Plane::getTimeRequired() {
     return -1; // Invalid size
 }
 
-int Plane::getAtcID() 
-{
+// Get the ATC ID
+int Plane::getAtcID() {
     return atcID;
 }
 
-std::string Plane::getInfo() 
-{
-    return callSign + " " + to_string(flightNumber)+ " (" + to_string(atcID) + ")" +" " + size;
+// Get information about the plane
+std::string Plane::getInfo() {
+    return callSign + " " + to_string(flightNumber) + " (" + to_string(atcID) + ")" + " " + size;
 }

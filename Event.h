@@ -1,24 +1,41 @@
+// Event.h
+//-----------------------------------------
+// CLASS: Event
+//
+// AUTHOR: Felix Vo, 7924848
+//
+// REMARKS: Abstract base class for simulation events.
+//          Handles common event properties and interface
+//          for polymorphic event processing.
+//-----------------------------------------
+
 #pragma once
 #include <iostream>
-#include "Plane.h"
+class Plane;
+class Runway;
+using namespace std;
 
-class Event 
-{
+class Event {
     protected:
+        const int FINAL_APPROACH_TIME = 2;
+        const int RUNWAY_TIME = 1; 
         int time;
         Plane* plane;
     public:
+        Event();
         Event(int t, Plane* plane);
         virtual ~Event();
 
-        //Instance methods
+        // Instance methods
         int getTime();
-        Plane* getPlane();
+        string getPlaneInfo();
+        int getRequireTime();
         int getAtcID();
-        virtual bool isComplete() {return false;}
+        Plane* getPlane();
         
-        virtual void process() = 0;
-        virtual bool isLanding() {return false;}
+        // Pure virtual methods for derived classes to implement
+        virtual Event* process(Runway* R,int currentTime) = 0;
+        virtual bool isLanding() { return false; }
+        virtual string getType() = 0;
         virtual void print();
-
 };
